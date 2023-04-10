@@ -10,10 +10,11 @@ In Odoo, this process can be conducted manually— by warehouse employees physic
 products— or automatically through the database.
 
 .. seealso::
-   :ref:`Inventory valuation configuration <inventory/inventory_valuation_config>`
+   - :ref:`3 types of inventory valuation methods
+     <inventory/management/reporting/inventory_valuation_config>`
 
-Understand the basics of inventory valuation
-============================================
+Inventory valuation basics
+==========================
 
 In order to understand how moving products in and out of stock affects the company's overall value,
 consider the following product and stock moves scenario below.
@@ -21,87 +22,83 @@ consider the following product and stock moves scenario below.
 Receive a product
 -----------------
 
-For example, consider an physical product, a simple *table*, which is categorized as `Office
+For example, consider a physical product, a simple *table*, which is categorized as `Office
 Furniture` in the product form's :guilabel:`Product Category` field.
 
 Navigate to the the product category itself by going to :menuselection:`Inventory app -->
-Configuration --> Product Categories`, and on the form, set the :guilabel:`Costing Method` as `First
-In First Out (FIFO)` and the :guilabel:`Inventory Valuation` field as `Automated`.
+Configuration --> Product Categories`. On the form, set the :guilabel:`Costing Method` as `First In
+First Out (FIFO)` and :guilabel:`Inventory Valuation` as `Automated`.
 
 .. tip::
-   Alternatively access the :guilabel:`Product Categories` dashboard by clicking on the
-   :guilabel:`internal link` arrow on the individual product's form, by hovering over the
-   :guilabel:`Product Category` field.
+   Alternatively access the :guilabel:`Product Categories` dashboard by clicking on the :guilabel:`➡️
+   (arrow)` icon on the individual product's form, by hovering over the :guilabel:`Product Category`
+   field.
 
 Next, assume 10 tables are purchased at a price of $10.00, each. The :abbr:`PO (Purchase Order)` for
 those tables will show the subtotal of the purchase as $100, plus any additional costs or taxes.
 
 .. image:: using_inventory_valuation/purchase-order.png
    :align: center
-   :alt: Purchase order with 10 tables products valued at $10 each.
+   :alt: Purchase order with 10 tables products valued at $10.00 each.
 
 After selecting :guilabel:`Validate` on the :abbr:`PO (Purchase Order)`, use the
-:guilabel:`Valuation` smart button to view how the value of inventory was impacted.
+:guilabel:`Valuation` smart button to view how the value of inventory was impacted. For a
+comprehensive dashboard displaying the inventory valuation of all product shipments, inventory
+adjustments, and warehouse operations, skip to :ref:`stock valuation report
+<inventory/reporting/valuation-report>`.
 
 .. image:: using_inventory_valuation/valuation-smart-button.png
    :align: center
    :alt: Valuation smart button on a receipt.
 
 .. important::
-   :ref:`Developer mode <developer-mode>` must be turned on to see the *Valuation* smart button.
+   :ref:`Developer mode <developer-mode>` **must** be turned on to see the :guilabel:`Valuation`
+   smart button.
 
 .. tip::
    The :doc:`consignment </applications/inventory_and_mrp/inventory/management/misc/owned_stock>`
    feature allows ownership to items in stock. Thus, products owned by other companies are not
    accounted for in the host company's inventory valuation.
 
-The :guilabel:`Stock Valuation` dashboard then displays valuation of all products in the shipment,
-along with their quantities and valuation. In the example of 10 tables being purchased, the
-:guilabel:`Total Value` column of the dashboard would display a calculated valuation of $100.
-
-.. image:: using_inventory_valuation/stock-valuation-product.png
-   :align: center
-   :alt: Stock valuation page depicting the products within a shipment.
-
-In Odoo, automatic inventory valuation records are also recorded in the *Accounting* app. To access
-these accounting entries, navigate to :menuselection:`Accounting --> Journal Entries`, and look for
-inventory valuation entries with the `STJ` prefix in the :guilabel:`Journal` and :guilabel:`Number`
-columns, respectively.
-
-.. image:: using_inventory_valuation/inventory-valuation-entry.png
-   :align: center
-   :alt: Accounting entry for the inventory valuation of 10 tables.
-
 Deliver a product
 -----------------
 
 In the same logic, when a table is shipped to a customer and leaves the warehouse, the stock
 valuation decreases. The :guilabel:`Valuation` smart button on the :abbr:`DO (Delivery Order)`,
-likewise, displays the stock valuation record as it does on a :abbr:`PO (Purchase Order)`
+likewise, displays the stock valuation record as it does on a :abbr:`PO (Purchase Order)`.
 
 .. image:: using_inventory_valuation/decreased-stock-valuation.png
    :align: center
    :alt: Decreased stock valuation after a product is shipped.
 
-The inventory valuation report
-------------------------------
+.. _inventory/reporting/valuation-report:
 
-To view the current value of all products in the warehouse, go to :menuselection:`Inventory app -->
-Reporting --> Inventory Valuation`. The records in the table are organized by product, and selecting
-a product's drop-down menu displays detailed records with the :guilabel:`Date`,
-:guilabel:`Quantity`, and :guilabel:`Total Value` of the inventory.
+Inventory valuation report
+==========================
+
+To view the current value of all products in the warehouse, first turn on :ref:`Developer mode
+<developer-mode>` and navigate to :menuselection:`Inventory app --> Reporting --> Valuation`. The
+page displays detailed records of products with the :guilabel:`Date`, :guilabel:`Quantity`,
+:guilabel:`Unit Value` and :guilabel:`Total Value` of the inventory.
+
+.. important::
+   :ref:`Developer mode <developer-mode>` **must** be enabled to see the :guilabel:`Valuation`
+   option under :guilabel:`Reporting`.
 
 .. image:: using_inventory_valuation/inventory-valuation-products.png
    :align: center
    :alt: Inventory valuation report showing multiple products.
 
-.. note::
-   The :guilabel:`Inventory At Date` button, located in the top-left corner of the :guilabel:`Stock
-   Valuation` dashboard, shows the inventory valuation of products available during a prior
-   specified date.
+The :guilabel:`Valuation At Date` button, located in the top-left corner of the :guilabel:`Stock
+Valuation` page, reveals a pop-up window. In this pop-up, the inventory valuation of products
+available during a prior specified date can be seen and selected.
+
+.. tip::
+   View a detailed record of a product's inventory value, stock move, and on-hand stock by selecting
+   the teal :guilabel:`➡️ (arrow)` button to the right of the :guilabel:`Reference` column value.
 
 Update product unit price
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 For any company: lead times, supply chain failures, and other risk factors can contribute to
 invisible costs. Although Odoo attempts to accurately represent the stock value, *manual valuation*
@@ -117,14 +114,47 @@ serves as an additional tool to update the unit price of products.
    :alt: Add manual valuation of stock value to a product.
 
 Create manual valuation entries on the :guilabel:`Stock Valuation` dashboard by first navigating to
-:menuselection:`Inventory app --> Reporting --> Inventory Valuation`, and then click the little gray
-drop-down icon to the left of a product's name, to then reveal stock valuation line items below as
-well as a teal :guilabel:`+ (plus)` button on the right.
+:menuselection:`Inventory app --> Reporting --> Valuation`. Next, to enable the product revaluation
+button, select :menuselection:`Group by --> Product` to organize all the records by product. Click
+on the gray drop-down icon to then reveal stock valuation line items below as well as a teal
+:guilabel:`+ (plus)` button on the right.
 
-Click the teal :guilabel:`+ (plus)` button to open up the :guilabel:`Product Revaluation` form,
+Click the teal :guilabel:`+ (plus)` button to open up the :guilabel:`Product Revaluation` form. This
+button is only visible after grouping entries by product.
 where updates to the calculation of inventory valuation can be made, by increasing or decreasing the
 unit price of each product.
 
 .. image:: using_inventory_valuation/product-revaluation.png
    :align: center
    :alt: Product revaluation form adding a value of $1.00 with the reason being inflation.
+
+Inventory valuation journal entries
+-----------------------------------
+
+In Odoo, automatic inventory valuation records are also recorded in the :menuselection:`Accounting
+app --> Accounting --> Journal Entries`. On this comprehensive list of accounting entries,
+identify the inventory valuation entries by looking for the :guilabel:`Reference` column value which
+matches the warehouse operation reference (e.g. `WH/IN/00014` for receipts).
+
+Clicking on the desired inventory valuation journal entry opens a *double-entry accounting* record
+that Odoo generated to track the value of products as they move in and out of the warehouse.
+
+.. example::
+   To view the inventory valuation of 10 *tables*, costing $10.00 each, upon reception from the
+   vendor, go to the :guilabel:`Journal Entries` page found in :menuselection:`Accounting app -->
+   Accounting --> Journal Entries`. On this page, click the journal line where the
+   :guilabel:`Reference` column value matches the reference on the receipt, `WH/IN/00014`.
+
+   .. image:: using_inventory_valuation/stock-valuation-product.png
+      :align: center
+      :alt: Stock valuation page depicting the products within a shipment.
+
+   *Stock interim* is a holding account for money intended to pay vendors for the product. The
+   *stock valuation* account stores the value of all on-hand stock.
+
+   .. image:: using_inventory_valuation/inventory-valuation-entry.png
+      :align: center
+      :alt: Accounting entry for the inventory valuation of 10 tables.
+
+.. seealso::
+   `Odoo Tutorial: Inventory Valuation <https://www.odoo.com/slides/slide/2795/share>`_
